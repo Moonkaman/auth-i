@@ -11,6 +11,7 @@ function get() {
 }
 
 function insert(user) {
+  console.log(user);
   return db('users').insert(user);
 }
 

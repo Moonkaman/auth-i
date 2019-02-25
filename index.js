@@ -1,8 +1,11 @@
 const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const bcrypt = require('bcrypt');
 
 const usersRouter = require('./users/usersRouter');
+
+const db = require('./data/helpers/usersDb');
 
 const server = express();
 
@@ -12,5 +15,18 @@ server.use(morgan('dev'));
 server.use('/api/users', usersRouter);
 
 const port = process.env.PORT || 8000;
+
+server.post('/api/register', (req, res) => {
+  if(!req.body.username || !req.body.password) {
+    res.status(400).json({errorMessage: 'Please provide a username & password'});
+  } else {
+    req.body.password = bcrypt.hashSync(req.body.password, 12);
+    console.log(req.body.username)
+    console.log(req.body.password)
+    db.insert(req.body)
+      .then(id => res.status(201).json({message: 'Successfully signed up', id: id[0]}))
+      .catch(err => res.status(500).json({errorMessage: 'Could not register at this time', error: err}));
+  }
+})
 
 server.listen(port, _ => console.log(`\n***Server is listening on port ${port}***\n`));
