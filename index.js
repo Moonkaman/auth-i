@@ -29,4 +29,19 @@ server.post('/api/register', (req, res) => {
   }
 })
 
+server.post('/api/login', (req, res) => {
+  if(!req.body.username || !req.body.password) {
+    res.status(400).json({errorMessage: 'Please provide a username & password'});
+  } else {
+    db.findBy({username: req.body.username})
+      .then(user => {
+        if(user && bcrypt.compareSync(req.body.password, user.password)) {
+          res.status(200).json({ message: `Logged in ${user.username}` });
+        } else {
+          res.status(401).json({ message: 'Invalid Credentials'});
+        }
+      })
+  }
+})
+
 server.listen(port, _ => console.log(`\n***Server is listening on port ${port}***\n`));
