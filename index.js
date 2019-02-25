@@ -41,6 +41,7 @@ server.post('/api/login', (req, res) => {
           res.status(401).json({ message: 'Invalid Credentials'});
         }
       })
+      .catch(err => res.status(500).json({errorMessage: 'Could not Log in at this time', error: err}));
   }
 })
 
