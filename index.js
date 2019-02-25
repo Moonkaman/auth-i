@@ -2,10 +2,14 @@ const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
+const usersRouter = require('./users/usersRouter');
+
 const server = express();
 
+server.use(express.json());
 server.use(helmet());
 server.use(morgan('dev'));
+server.use('/api/users', usersRouter);
 
 const port = process.env.PORT || 8000;
 
