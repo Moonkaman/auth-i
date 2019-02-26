@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 function restricted(req, res, next) {
   if(!req.headers.username || !req.headers.password) {
     res.status(401).json({message: 'Please provide a username and password in headers'})
