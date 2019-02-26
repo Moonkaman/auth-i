@@ -4,10 +4,12 @@ const morgan = require('morgan');
 const session = require('express-session');
 const KnexSessionStore = require('connect-session-knex')(session);
 
-const db = require('./data/dbConfig');
 
 const authRouter = require('./auth/authRouter');
 const usersRouter = require('./users/usersRouter');
+
+const server = express();
+const db = require('./data/dbConfig');
 
 server.use(session({
   name: 'banana',
@@ -27,15 +29,15 @@ server.use(session({
     createtable: true,
     clearInterval: 1000 * 60 * 60
   })
-}))
+}));
 
-const server = express();
 
 server.use(express.json());
 server.use(helmet());
 server.use(morgan('dev'));
 server.use('/api/users', usersRouter);
 server.use('/api', authRouter);
+
 
 const port = process.env.PORT || 8000;
 

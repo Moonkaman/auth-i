@@ -6,6 +6,7 @@ function restricted(req, res, next) {
   } else {
     db.findBy({username: req.headers.username})
     .then(user => {
+      console.log(user);
       if(user && bcrypt.compareSync(req.headers.password, user.password)) {
         next();
       } else {

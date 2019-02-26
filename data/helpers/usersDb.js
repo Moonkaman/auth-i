@@ -10,9 +10,15 @@ function get() {
   return db('users');
 }
 
+function getById(id) {
+  return db('users').where({id: id})
+}
+
 function insert(user) {
-  console.log(user);
-  return db('users').insert(user);
+  return db('users').insert(user)
+    .then(id => {
+      return getById(id[0]);
+    })
 }
 
 function findBy(username) {
