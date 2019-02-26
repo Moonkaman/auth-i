@@ -1,6 +1,5 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const session = require('express-session');
 
 const db = require('../data/helpers/usersDb');
 
@@ -51,7 +50,7 @@ router.get('/logout', (req, res) => {
       }
     });
   } else {
-    res.status(400).send('Alredy logged out.')
+    res.status(400).send('Already logged out.')
   }
 })
 
