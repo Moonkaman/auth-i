@@ -1,11 +1,11 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 
-const db = require('./data/helpers/usersDb');
+const db = require('../data/helpers/usersDb');
 
 const router = express.Router();
 
-server.post('/api/register', (req, res) => {
+router.post('/api/register', (req, res) => {
   if(!req.body.username || !req.body.password) {
     res.status(400).json({errorMessage: 'Please provide a username & password'});
   } else {
@@ -18,7 +18,7 @@ server.post('/api/register', (req, res) => {
   }
 })
 
-server.post('/api/login', (req, res) => {
+router.post('/api/login', (req, res) => {
   if(!req.body.username || !req.body.password) {
     res.status(400).json({errorMessage: 'Please provide a username & password'});
   } else {
