@@ -1,5 +1,3 @@
-const bcrypt = require('bcrypt');
-
 function restricted(req, res, next) {
   if(req.session.user) {
     next();
